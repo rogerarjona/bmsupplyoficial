@@ -19,9 +19,9 @@ admin.site.register(Warehouse, WarehouseAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
 	model = Product
-	list_display = ('name', 'price', 'quantity', 'created', 'last_updated')
-	search_fields = ('name', 'price', 'partner')
-	raw_id_fields = ['partner', 'warehouse', 'category', 'status', 'promotion']
+	list_display = ('name', 'created', 'last_updated', 'category')
+	search_fields = ('name', 'partner')
+	raw_id_fields = ['partner', 'category','promotion']
 admin.site.register(Product, ProductAdmin)
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -47,3 +47,15 @@ class SendAdmin(admin.ModelAdmin):
 	list_display = ('name', 'created')
 	search_fields = ('name',)
 admin.site.register(Send, SendAdmin)
+
+class ProductWarehouseAdmin(admin.ModelAdmin):
+	model = ProductWarehouse
+	list_display = ('product', 'warehouse', 'price', 'quantity', 'status')
+	search_fields = ('product__name', 'warehouse__name',)
+admin.site.register(ProductWarehouse, ProductWarehouseAdmin)
+
+class QuantityDiscountAdmin(admin.ModelAdmin):
+	model = QuantityDiscount
+	list_display = ('name', 'mult', 'created')
+	search_fields = ('name',)
+admin.site.register(QuantityDiscount, QuantityDiscountAdmin)

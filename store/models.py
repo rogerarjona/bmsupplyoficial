@@ -33,6 +33,7 @@ class Warehouse(models.Model):
     #Foreign Keys
     partner = models.ForeignKey(Partner, related_name='partnet_warehouse')
 
+
     class Meta:
         ordering = ('-created',)
         verbose_name = "Warehouse"
@@ -96,8 +97,6 @@ class Send(models.Model):
 class Product(models.Model):
     shortname = models.CharField(max_length=50, blank=True, null=True)
     name = models.CharField(max_length=150)
-    price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Precio", default=0)
-    quantity = models.SmallIntegerField(default=1) 
     description = models.TextField(max_length=1500, blank=True)
     image = models.ImageField(upload_to='product')
     created = models.DateTimeField(auto_now=True, editable=False)
@@ -106,16 +105,43 @@ class Product(models.Model):
 
     #Foreign Keys
     category = models.ForeignKey(Category, related_name='product_category')
-    status = models.ForeignKey(Status, related_name='product_status')
     promotion = models.ForeignKey(Promotion, related_name='product_promotion', blank=True, null=True)
-    warehouse = models.ForeignKey(Warehouse, related_name='product_warehouse')
     partner = models.ForeignKey(Partner, related_name='product_partner', on_delete=models.CASCADE)
-    sendcost = models.ForeignKey(Send, related_name='product_send', blank=True, null=True)
     
     class Meta:
         ordering = ('-created',)
         verbose_name = "Product"
         verbose_name_plural = "Products"
+
+    def __unicode__(self):
+        return u'{0}'.format(self.name)
+
+class ProductWarehouse(models.Model):
+    price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Costo", default=0)
+    quantity = models.SmallIntegerField(default=1)
+
+    #Foreign Keys
+    product = models.ForeignKey(Product, related_name='product_productwarehouse')
+    warehouse = models.ForeignKey(Warehouse, related_name='warehouse_productwarehouse')
+    status = models.ForeignKey(Status, related_name='status_productwarehouse')
+
+    class Meta:
+        # ordering = ('-created',)
+        verbose_name = "ProductWarehouse"
+        verbose_name_plural = "ProductWarehouse"
+
+    def __unicode__(self):
+        return u'{0}'.format(self.name)
+
+class QuantityDiscount(models.Model):
+    name  = models.CharField(max_length=50)
+    mult = models.SmallIntegerField(default=1)
+    created = models.DateTimeField(auto_now=True, editable=False)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = "QuantityDiscount"
+        verbose_name_plural = "QuantityDiscount"
 
     def __unicode__(self):
         return u'{0}'.format(self.name)
