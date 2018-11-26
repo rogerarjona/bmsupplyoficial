@@ -4,6 +4,6 @@ from django.contrib.auth.decorators import login_required
 from store import views
 
 urlpatterns = [
-	url(r'^accounts/', include('allauth.urls')),
-	url(r'^index/$', login_required(views.index), name="index" ),
+	# url(r'^accounts/', include('allauth.urls')),
+	url(r'^index/$', views.index, name="index" ),
 ]

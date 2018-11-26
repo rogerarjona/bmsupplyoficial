@@ -6,7 +6,8 @@ from .models import *
 
 def index(request):
 	lista_empresas = Partner.objects.all()
-	return render(request, 'lista_empresas.html', {'lista_empresas': lista_empresas})
+	user = request.user
+	return render(request, 'lista_empresas.html', {'lista_empresas': lista_empresas, 'user':user})
 
 # def sucursal(request):
 # 	empresa = request.user.perfilusuario.empresa

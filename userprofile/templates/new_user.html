@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n %}
+
+{% block metatags %}
+    <title>Nuevo Usuario</title>
+    <meta name="description" content="Nuevo Usuario"> 
+{% endblock %}
+
+{% block content %}
+	<form method="post">
+	  {% csrf_token %}
+	  {{ user_form.as_p }}
+	  {{ profile_form.as_p }}
+	  <button type="submit">Save changes</button>
+	</form>
+{% endblock %}

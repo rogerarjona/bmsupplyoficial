@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n %}
+
 {% block metatags %}
     <title>A ver</title>
     <meta name="description" content="A ver"> 
@@ -6,4 +7,11 @@
 
 {% block content %}
 	<a href="" class="btn btn-sm btn-primary"><i class="fa fa-address-book"></i></a>
+
+		{{user}}
+		{% for imagen in lista_empresas %}
+			<img src="{{ imagen.contract.url }}">
+			<p>{{ imagen }}</p>
+			<p>{{ imagen.contract.url }}</p>
+		{% endfor %}
 {% endblock %}
