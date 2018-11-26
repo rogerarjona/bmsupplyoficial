@@ -41,3 +41,9 @@ class PromotionAdmin(admin.ModelAdmin):
 	list_display = ('name', 'porcent', 'created')
 	search_fields = ('name', 'porcent')
 admin.site.register(Promotion, PromotionAdmin)
+
+class SendAdmin(admin.ModelAdmin):
+	model = Send
+	list_display = ('name', 'created')
+	search_fields = ('name',)
+admin.site.register(Send, SendAdmin)

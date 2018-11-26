@@ -147,7 +147,6 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media/bmsupply_files')
 #Messages
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
-    messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
     messages.SUCCESS: 'alert-success',
     messages.WARNING: 'alert-warning',

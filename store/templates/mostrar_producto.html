@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n %}
+
+{% block metatags %}
+    <title>A ver</title>
+    <meta name="description" content="A ver"> 
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-3">
+			<img src="{{producto.image.url}}" id="image-{{producto.id}}">
+		</div>
+		<div class="col-md-9">
+			<h4>{{producto.name}}</h4>
+			<p></p>
+			<h6 class="text-muted">{{producto.partner}} | SKU: {{producto.sku}} |</h6>
+			<p></p>
+			<div class="p-2 bg-primary text-white rounded">
+				{% if producto.sendcost %}
+				<div>Costo de Envio: </div>
+				<div>Tiempo de Entrega: </div>
+				{% else %}
+				<div><i class="fa fa-truck"></i><strong> Envio Gratis</strong></div>
+				{% endif %}
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

@@ -85,22 +85,33 @@ class Promotion(models.Model):
     def __unicode__(self):
         return u'{0}'.format(self.name)
 
+class Send(models.Model):
+    name = models.CharField(max_length=150)
+    cost = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Costo", default=0)
+    created = models.DateTimeField(auto_now=True, editable=False)
+
+    def __unicode__(self):
+        return u'{0}'.format(self.name)
+
 class Product(models.Model):
-    name = models.CharField(max_length=150, unique=True)
+    shortname = models.CharField(max_length=50, blank=True, null=True)
+    name = models.CharField(max_length=150)
     price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Precio", default=0)
     quantity = models.SmallIntegerField(default=1) 
     description = models.TextField(max_length=1500, blank=True)
     image = models.ImageField(upload_to='product')
     created = models.DateTimeField(auto_now=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
+    sku = models.CharField(max_length=30, blank=True, null=True)
 
     #Foreign Keys
     category = models.ForeignKey(Category, related_name='product_category')
     status = models.ForeignKey(Status, related_name='product_status')
-    promotion = models.ForeignKey(Promotion, related_name='product_promotion')
+    promotion = models.ForeignKey(Promotion, related_name='product_promotion', blank=True, null=True)
     warehouse = models.ForeignKey(Warehouse, related_name='product_warehouse')
     partner = models.ForeignKey(Partner, related_name='product_partner', on_delete=models.CASCADE)
-
+    sendcost = models.ForeignKey(Send, related_name='product_send', blank=True, null=True)
+    
     class Meta:
         ordering = ('-created',)
         verbose_name = "Product"
