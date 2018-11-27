@@ -34,7 +34,100 @@
 					</div>
 				</div>
 			</div>
+			<p></p>
+			<!-- Titulos de lo que se despliega -->
+			<div class="p-2 bg-warning text-white rounded">
+				<div class="row">
+					<div class="col-sm">Almacen</div>
+					<div class="col-sm">Existencias</div>
+					<div class="col-sm">Precio Unitario</div>
+				</div>
+			</div>
+			<p></p>
+			<!-- Parte que se despliega -->
+			<div class="container-fluid">
+				{% for key, value in product_map.items %}
+				<div class="row bg-warning">
+					<div class="p-2 col-sm-12 well">
+						<a href="#{{key}}" class="inf">
+							<div class="row">
+								<div class="col-sm-4 text-white">
+									{{value.producto.warehouse}}
+								</div>
+								<div class="col-sm-4 text-white">
+									{{value.producto.quantity}} Pzs.
+								</div>
+								<div class="col-sm-4 text-white">
+									${{value.producto.price}}
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="row border border-warning">
+					<div id="{{key}}" class="col-sm-12 well oculto">
+						{% for key, value in value.dis.items %}
+						<div class="row">
+							<div class="col-sm-4 text-black">
+								
+							</div>
+							<div class="col-sm-4 text-black">
+								{{value.name}}
+							</div>
+							<div class="col-sm-4 text-black">
+								${{value.total}}
+							</div>
+						</div>
+						{% endfor %}
+	      			</div>
+	      		</div>
+				{% endfor %}
+			</div>
 		</div>
-
 	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card border-primary">
+				<div class="card-header text-center"> Mas informacion del producto</div>
+				<div class="card-body">
+					<div>
+						<!-- {{producto.description|safe}} -->
+						{% if producto.description and producto.specifications %}
+						<h4 class="card-text">Descripcion General</h4>
+						<img src="{{producto.description_image.url}}">
+						<p></p>
+						<h4 class="card-text">Especificaciones</h4>
+						<img src="{{producto.specifications.url}}" class="float-left">
+						{% else %}
+						<h5>Nada que mostrar...</h5>
+						{% endif %}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block extra_tags %}
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+	  $(".oculto").hide();              
+	    $(".inf").click(function(){
+	          var nodo = $(this).attr("href");  
+	 
+	          if ($(nodo).is(":visible")){
+	               $(nodo).hide();
+	               return false;
+	          }else{
+	        $(".oculto").hide("fast");                             
+	        $(nodo).fadeToggle("fast");
+	        return false;
+	          }
+	    });
+	}); 
+</script>
+
 {% endblock %}

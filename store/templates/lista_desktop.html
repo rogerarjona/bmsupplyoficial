@@ -9,18 +9,18 @@
 <div class="row">
 	<!-- <div class="col-md-1"></div> -->
 		<!--  <div class="card-deck"> -->
-	{% for product in product_list %}
+	{% for key, value in product_list.items %}
 	<div class="col-md-3">
 		<div class="container-float">
 	     	<div class="card border-success">
-	     		<img  id="image-{{product.id}}" class="card-img-top" src="{{ product.image.url }}" alt="" width="300px" height="300px">
+	     		<img  id="image-{{value.producto.id}}" class="card-img-top" src="{{ value.producto.image.url }}" alt="" width="300px" height="300px">
 	     		<div class="card-body">
-	     			<p class="card-text mb-0"><small class="text-muted">SKU: </small></p>
-	     			<p class="card-text mb-0"><h6 class="text-muted">Desde: $<span class="text-success"><strong>{{product.price}}</strong></span> MXN</h6></p>
-	     			<h5 class="card-title">{{product.shortname}}</h5>
+	     			<p class="card-text mb-0"><small class="text-muted">SKU: {{value.producto.sku}}</small></p>
+	     			<p class="card-text mb-0"><h6 class="text-muted">Desde: $<span class="text-success"><strong>{{value.producto.base}}</strong></span> MXN</h6></p>
+	     			<h5 class="card-title">{{value.producto.shortname}}</h5>
 	     			
-	     			{% if product.quantity > 0 %}
-	     				<p>Disponibles: {{product.quantity}}</p>
+	     			{% if value.cantidad > 0 %}
+	     				<p>Disponibles: {{value.cantidad}}</p>
 	     				<a href="#" class="btn btn-warning">Agregar al carrito</a>
 	     			{% else %}	
 	     				<h4 class="text-warning text-center">Agotado</h4>

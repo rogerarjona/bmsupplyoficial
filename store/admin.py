@@ -19,7 +19,7 @@ admin.site.register(Warehouse, WarehouseAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
 	model = Product
-	list_display = ('name', 'created', 'last_updated', 'category')
+	list_display = ('shortname', 'category', 'created', 'last_updated', )
 	search_fields = ('name', 'partner')
 	raw_id_fields = ['partner', 'category','promotion']
 admin.site.register(Product, ProductAdmin)

@@ -98,23 +98,27 @@ class Product(models.Model):
     shortname = models.CharField(max_length=50, blank=True, null=True)
     name = models.CharField(max_length=150)
     description = models.TextField(max_length=1500, blank=True)
-    image = models.ImageField(upload_to='product')
+    description_image = models.ImageField(upload_to='description', blank=True, null=True)
+    specifications = models.ImageField(upload_to='specifications', blank=True, null=True)
+    image = models.ImageField(upload_to='product', blank=True, null=True)
     created = models.DateTimeField(auto_now=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     sku = models.CharField(max_length=30, blank=True, null=True)
+    base = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Costo", default=0)
 
     #Foreign Keys
     category = models.ForeignKey(Category, related_name='product_category')
     promotion = models.ForeignKey(Promotion, related_name='product_promotion', blank=True, null=True)
     partner = models.ForeignKey(Partner, related_name='product_partner', on_delete=models.CASCADE)
-    
+    send = models.ForeignKey(Send, related_name='product_send', blank=True, null=True)
+
     class Meta:
         ordering = ('-created',)
         verbose_name = "Product"
         verbose_name_plural = "Products"
 
     def __unicode__(self):
-        return u'{0}'.format(self.name)
+        return u'{0}'.format(self.shortname)
 
 class ProductWarehouse(models.Model):
     price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Costo", default=0)
@@ -131,11 +135,12 @@ class ProductWarehouse(models.Model):
         verbose_name_plural = "ProductWarehouse"
 
     def __unicode__(self):
-        return u'{0}'.format(self.name)
+        return u'{0}'.format(self.product)
 
 class QuantityDiscount(models.Model):
-    name  = models.CharField(max_length=50)
-    mult = models.SmallIntegerField(default=1)
+    quantity = models.SmallIntegerField(default=1)
+    name = models.CharField(max_length=50)
+    mult = models.DecimalField(max_digits=15, decimal_places=2)
     created = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
