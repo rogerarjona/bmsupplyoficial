@@ -9,6 +9,8 @@
 	<div class="row">
 		<div class="col-md-3">
 			<img src="{{producto.image.url}}" id="image-{{producto.id}}">
+			<p></p>
+			<a href="{{producto.pdf.url}}" target="_blank" class="btn btn-outline-secondary"><i class="fa fa-file-pdf"></i> Descargar PDF</a>
 		</div>
 		<div class="col-md-9">
 			<h4>{{producto.name}}</h4>
@@ -29,7 +31,11 @@
 					</div>
 					<div class="col-md-9">
 						<div class="float-right">
-							<button type="submit" class="btn btn-warning">Agregar al carrito</button>
+							<form method="post" action="#">
+
+								<button type="submit" class="btn btn-warning">Agregar al carrito</button>
+							</form>
+							
 						</div>
 					</div>
 				</div>
@@ -95,10 +101,10 @@
 						<!-- {{producto.description|safe}} -->
 						{% if producto.description and producto.specifications %}
 						<h4 class="card-text">Descripcion General</h4>
-						<img src="{{producto.description_image.url}}">
+						<img src="{{producto.description_image.url}}" class="border border-primary rounded">
 						<p></p>
 						<h4 class="card-text">Especificaciones</h4>
-						<img src="{{producto.specifications.url}}" class="float-left">
+						<img src="{{producto.specifications.url}}" class="float-left border border-primary rounded">
 						{% else %}
 						<h5>Nada que mostrar...</h5>
 						{% endif %}

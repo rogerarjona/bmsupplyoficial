@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy,reverse
 from django.contrib import messages
 from django.db.models import Count, Sum, F, Func
 from .models import *
+from .forms import *
 
 def index(request):
 	lista_empresas = Partner.objects.all()
@@ -28,8 +29,9 @@ def desktop_list(request):
 		if id_desktop in desktop_map:
 			desktop_map[id_desktop]['cantidad'] = t['total']
 	
+	category = "Desktop"
 	
-	return render(request, 'lista_desktop.html', {'product_list':desktop_map})
+	return render(request, 'lista_desktop.html', {'product_list':desktop_map, 'category':category})
 
 def portatiles_list(request):
 
@@ -46,7 +48,7 @@ def portatiles_list(request):
 		if id_portatil in portatiles_map:
 			portatiles_map[id_portatil]['cantidad'] = t['total']
 
-	return render(request, 'lista_desktop.html', {'product_list':portatiles_map})
+	return render(request, 'lista_desktop.html', {'product_list':portatiles_map, 'category':'Portatiles'})
 
 def redes_list(request):
 
@@ -63,7 +65,7 @@ def redes_list(request):
 		if id_redes in redes_map:
 			redes_map[id_redes]['cantidad'] = t['total']
 
-	return render(request, 'lista_desktop.html', {'product_list':redes_map})
+	return render(request, 'lista_desktop.html', {'product_list':redes_map, 'category':'Redes'})
 
 def accesorios_list(request):
 
@@ -80,7 +82,7 @@ def accesorios_list(request):
 		if id_accesorio in accesorios_map:
 			accesorios_map[id_accesorio]['cantidad'] = t['total']
 
-	return render(request, 'lista_desktop.html', {'product_list':accesorios_map})
+	return render(request, 'lista_desktop.html', {'product_list':accesorios_map, 'category':'Accesorios'})
 
 def impresoras_list(request):
 
@@ -97,7 +99,7 @@ def impresoras_list(request):
 		if id_impresora in impresoras_map:
 			impresoras_map[id_impresora]['cantidad'] = t['total']
 
-	return render(request, 'lista_desktop.html', {'product_list':impresoras_map})
+	return render(request, 'lista_desktop.html', {'product_list':impresoras_map, 'category':'Impresoras y Tintas'})
 
 def muebles_list(request):
 
@@ -105,7 +107,7 @@ def muebles_list(request):
 	total = list(ProductWarehouse.objects.filter(product__category__name="Muebles de Oficina").values('product__id').annotate(total=Sum('quantity')))
 
 	muebles_map = {}
-	for d in impresoras:
+	for d in muebles:
 		id_mueble = str(d.id)
 		muebles_map[id_mueble] = {'producto': d, 'cantidad': 0}
 
@@ -114,7 +116,7 @@ def muebles_list(request):
 		if id_mueble in muebles_map:
 			muebles_map[id_mueble]['cantidad'] = t['total']
 
-	return render(request, 'lista_desktop.html', {'product_list':muebles_map})
+	return render(request, 'lista_desktop.html', {'product_list':muebles_map, 'category':'Muebles de Oficina'})
 
 def mostrar_producto(request, id):
 	
@@ -140,7 +142,14 @@ def mostrar_producto(request, id):
 			
 		product_map[id_producto] = {'producto': p, 'dis': discount_map}
 
-	print product_map
+	form = nuevoProductoCarrito()
 
 	return render(request, 'mostrar_producto.html', {'producto':producto, 'productwarehouse':productwarehouse, 'product_map':product_map
-		, 'prueba':prueba})
+		, 'prueba':prueba, 'form':form})
+
+def shopping_cart(request):
+
+	user = request.user
+	product_user = VentaTemporal.objects.filter(profile=user)
+
+	return render(request, 'shopping_cart.html', {'product_user':product_user})

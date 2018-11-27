@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-	
 from __future__ import unicode_literals
 from django.db import models
-
+from django.contrib.auth.models import User
+from userprofile.models import *
 #Empresa / Colaborador
 class Partner(models.Model):
     name = models.CharField(max_length=80, unique=True)
@@ -101,6 +102,7 @@ class Product(models.Model):
     description_image = models.ImageField(upload_to='description', blank=True, null=True)
     specifications = models.ImageField(upload_to='specifications', blank=True, null=True)
     image = models.ImageField(upload_to='product', blank=True, null=True)
+    pdf = models.FileField(upload_to='pdf', blank=True, null=True)
     created = models.DateTimeField(auto_now=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     sku = models.CharField(max_length=30, blank=True, null=True)
@@ -150,3 +152,22 @@ class QuantityDiscount(models.Model):
 
     def __unicode__(self):
         return u'{0}'.format(self.name)
+
+class VentaTemporal(models.Model):
+    
+    cantidad_producto = models.SmallIntegerField(default=1)
+    created = models.DateTimeField(auto_now=True, editable=False)
+
+    profile = models.ForeignKey(User, related_name='venta_temporal_userprofile')
+    producto = models.ForeignKey(ProductWarehouse, related_name='temporal_productwarehouse')
+    
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = "Ventas Temporales"
+        verbose_name_plural = "Ventas Temporales"
+
+    def __unicode__(self):
+        return u'{0}'.format(self.producto)
+    
+
+    

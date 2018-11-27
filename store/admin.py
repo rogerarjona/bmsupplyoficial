@@ -59,3 +59,10 @@ class QuantityDiscountAdmin(admin.ModelAdmin):
 	list_display = ('name', 'mult', 'created')
 	search_fields = ('name',)
 admin.site.register(QuantityDiscount, QuantityDiscountAdmin)
+
+class VentaTemporalAdmin(admin.ModelAdmin):
+	model = VentaTemporal
+	list_display = ('id', 'producto', 'cantidad_producto', 'profile')
+	search_fields = ('producto', 'profile')
+	raw_id_fields = ['producto', 'profile',]
+admin.site.register(VentaTemporal, VentaTemporalAdmin)
