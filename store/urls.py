@@ -13,6 +13,6 @@ urlpatterns = [
 	url(r'^redes/$', views.redes_list, name = "redes_list"),
 	url(r'^muebles-oficina/$', views.muebles_list, name = "muebles_list"),
 	url(r'^mostrar-producto/([\w.@+-]+)/$', views.mostrar_producto, name = "mostrar_producto"),
-	url(r'^shopping-cart/$', views.shopping_cart, name = "shopping_cart"),
+	url(r'^shopping-cart/$', login_required(views.shopping_cart), name = "shopping_cart"),
 
 ]

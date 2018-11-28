@@ -66,3 +66,10 @@ class VentaTemporalAdmin(admin.ModelAdmin):
 	search_fields = ('producto', 'profile')
 	raw_id_fields = ['producto', 'profile',]
 admin.site.register(VentaTemporal, VentaTemporalAdmin)
+
+class EnvioFacturacionAdmin(admin.ModelAdmin):
+	model = EnvioFacturacion
+	list_display = ('profile', 'rfc', 'email_facturacion')
+	search_fields = ('profile',)
+	raw_id_fields = ['profile',]
+admin.site.register(EnvioFacturacion, EnvioFacturacionAdmin)

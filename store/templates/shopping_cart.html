@@ -1,12 +1,140 @@
 {% extends "base.html" %}{% load static from staticfiles %}  {% load i18n %}
 
 {% block metatags %}
-    <title>Shopping Cart</title>
-    <meta name="description" content="Shopping Cart"> 
+    <title>Shopping Cart - {{request.user}}</title>
 {% endblock %}
 
 {% block content %}
-	
-	{{product_user}}
+<div class="row">
+	<div class=" col-md-3 float-left">
+		<button type="button" class="btn btn-secondary">Carrito</button>
+	</div>
+	<div class="col-md-9">
+		<button type="button" class="btn btn-info disabled float-right">3. Confirmacion </button>
+		<button type="button" class="btn btn-info disabled float-right">2. Envio y Pago </button>
+		<button type="button" class="btn btn-info disabled float-right">1. Elegir Dirección </button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<p></p>
+		<div class="p-2 bg-primary text-white rounded">
+			<div class="row">
+				<div class="col-md-4">
+					Producto
+				</div>
+				<div class="col-md-2">
+					Almacen
+				</div>
+				<div class="col-md-2">
+					Cantidad
+				</div>
+				<div class="col-md-2">
+					Precio Unitario
+				</div>
+				<div class="col-md-2">
+					Total
+				</div>
+			</div>
+		</div>
+		<p></p>
+		
+		{% for key,value in product_map.items %}
+		<div class="p-2 bg-primary text-white rounded">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-3">
+							<img src="{{value.producto.producto.product.image.url}}" class="img-thumbnail" width="50px" height="50px">
+						</div>
+						<div class="col-md-9">
+							{{value.producto.producto.product.shortname}}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					{{value.producto.producto.warehouse}}
+				</div>
+				<div class="col-md-2">
+					{{value.producto.cantidad_producto}} Pzs.
+				</div>
+				<div class="col-md-2">
+					${{value.producto.producto.price}}
+				</div>
+				<div class="col-md-2">
+					${{value.total_producto}}
+				</div>
+			</div>
+		</div>
+		<p></p>
+		{% endfor %}
+		<a href="" class="btn btn-outline-primary" text-dark">Regresar</a>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-7">
+		
+	</div>
+	<div class="col-md-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card border-light mb-5" style="max-width: 40rem;">
+				  <div class="card-header">
+				  	<div class="row">
+				  		<div class="col-md-8">
+				  			SUBTOTAL(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{total_sin_iva}}
+				  		</div>
+				  	</div>
+				  	<div class="row">
+				  		<div class="col-md-8">
+				  			COSTO DE ENVIO(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{envio_sin_iva}}
+				  		</div>
+				  	</div>
+				  </div>
+				  <div class="card-header">
+				  	<div class="row">
+				  		<div class="col-md-8 font-weight-bold">
+				  			PRECIO TOTAL(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{precio_total_sin_iva}}
+				  		</div>
+				  	</div>
+				  	<div class="row">
+				  		<div class="col-md-8">
+				  			IVA (16%):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{total_iva}}
+				  		</div>
+				  	</div>
+				  </div>
+				  <div class="card-header">
+				  	<div class="row">
+				  		<div class="col-md-8 font-weight-bold">
+				  			PRECIO TOTAL(incl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{precio_total}}
+				  		</div>
+				  	</div>
+				  </div>
+				  <div class="card-body bg-light">
+				    <h4 class="card-title">Light card title</h4>
+				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				  </div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
 
 {% endblock %}

@@ -25,21 +25,21 @@
       
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categorias</a>
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-align-justify"></i> Categorias</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Desktop</a>
-            <a class="dropdown-item" href="#">Portatiles</a>
-            <a class="dropdown-item" href="#">Accesorios</a>
-            <a class="dropdown-item" href="#">Redes</a>
-            <a class="dropdown-item" href="#">Impresoras y tintas</a>
-            <a class="dropdown-item" href="#">Muebles de Oficina</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-desktop"></i> Desktop</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-laptop"></i> Portatiles</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-headphones"></i> Accesorios</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-hdd"></i> Redes</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-print"></i> Impresoras y tintas</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-couch"></i> Muebles de Oficina</a>
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Empresas</a>
+          <a class="nav-link" href="#"><i class="fa fa-building"></i> Empresas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Promociones</a>
+          <a class="nav-link" href="#"><i class="fa fa-percent"></i> Promociones</a>
         </li>
       </ul>
     </div>
@@ -47,23 +47,26 @@
     <div class="pull-right">
       <ul class="navbar-nav mr-auto float-right">
         {% if request.user.is_authenticated %}
+        <li class="nav-item ">
+          <a class="nav-link" href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i> Carrito</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-tie"></i> {{request.user.username}}</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="#">Perfil</a>
             <a class="dropdown-item" href="#">Direcciones</a>
-            <a class="dropdown-item" href="{% url 'account_logout' %}">Cerrar Sesion</a>
+            <a class="dropdown-item" href="{% url 'account_logout' %}"><i class="fa fa-sign-out-alt"></i>Cerrar Sesion</a>
           </div>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="#">Mis Pedidos</a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="#">¿Necesitas Asesoria?</a>
+          <a class="nav-link" href="#"><i class="fa fa-question-circle"></i> ¿Ayuda?</a>
         </li>
         {% else %}
         <li class="nav-item ">
-          <a class="nav-link" href="{% url 'account_login' %}">Iniciar Sesion</a>
+          <a class="nav-link" href="{% url 'account_login' %}"><i class="fa fa-key"></i> Iniciar Sesion</a>
         </li>
         <li class="nav-item">
           <a href="{% url 'account_signup' %}" class="nav-link">Registrarse</a>
@@ -77,11 +80,13 @@
 
 <section>
   <div class="container">
-    <div class="row" id="content-wrapper">
+    <div class="row">
+      <div class="col-md-12">
       <p></p>
       <!-- <div class="col-xs-12"> -->
         {% block content %}
         {% endblock %}
+      </div>
       <!-- </div> -->
     </div>
   </div>
@@ -90,12 +95,13 @@
   
 
 
-
-
 <script src="{% static 'js/jquery.min.js'%}"></script>
+<script src="{% static 'js/jquery.steps.js'%}"></script>
+<script src="{% static 'js/jquery.steps.min.js'%}"></script>
 <script src="{% static 'js/jquery.dataTables.min.js'%}"></script>
 <script src="{% static 'js/dataTables.bootstrap4.min.js'%}"></script>
 <script src="{% static 'js/bootstrap.min.js'%}"></script>
+
 
 
 {% block extra_tags %}

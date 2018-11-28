@@ -170,4 +170,102 @@ class VentaTemporal(models.Model):
         return u'{0}'.format(self.producto)
     
 
+class EnvioFacturacion(models.Model):
+
+    mujer = 0
+    hombre = 1
+
+    SEXO = (
+        (mujer, 'Mujer'),
+        (hombre, 'Hombre')
+    )
+
+    Aguascalientes = 1
+    Baja_California = 2
+    Baja_California_Sur = 3
+    Campeche = 4
+    Chiapas = 5
+    Chihuahua = 6   
+    Ciudad_de_Mexico = 7   
+    Coahuila = 8
+    Colima = 9
+    Durango = 10  
+    Estado_de_Mexico = 11
+    Guanajuato = 12
+    Guerrero = 13
+    Hidalgo = 14   
+    Jalisco = 15   
+    Michoacan_de_Ocampo = 16
+    Morelos = 17
+    Nayarit = 18
+    Nuevo_Leon = 19   
+    Oaxaca = 20
+    Puebla = 21   
+    Queretaro = 22
+    Quintana_Roo = 23
+    San_Luis_Potosi = 24   
+    Sinaloa = 25
+    Sonora = 26  
+    Tabasco = 27
+    Tamaulipas = 28
+    Tlaxcala = 29
+    Veracruz = 30   
+    Yucatan = 31
+    Zacatecas = 32
     
+    ESTADO = (
+        (Aguascalientes,'Aguascalientes'),
+        (Baja_California,'Baja California'),
+        (Baja_California_Sur,'Baja California Sur'),
+        (Campeche,'Campeche'),
+        (Chiapas,'Chiapas'),
+        (Chihuahua,'Chihuahua'),
+        (Ciudad_de_Mexico,'Ciudad de Mexico'),
+        (Coahuila,'Coahuila'),
+        (Colima,'Colima'),
+        (Durango,'Durango'),
+        (Estado_de_Mexico,'Estado de Mexico'),
+        (Guanajuato,'Guanajuato'),
+        (Guerrero,'Guerrero'),
+        (Hidalgo,'Hidalgo'),
+        (Jalisco,'Jalisco'),
+        (Michoacan_de_Ocampo,'Michoacan'),
+        (Morelos,'Morelos'),
+        (Nayarit,'Nayarit'),
+        (Nuevo_Leon,'Nuevo Leon'),
+        (Oaxaca,'Oaxaca'),
+        (Puebla,'Puebla'),
+        (Queretaro,'Queretaro'),
+        (Quintana_Roo,'Quintana_Roo'),
+        (San_Luis_Potosi,'San Luis Potosi'),
+        (Sinaloa,'Sinaloa'),
+        (Sonora,'Sonora'),
+        (Tabasco,'Tabasco'),
+        (Tamaulipas,'Tamaulipas'),
+        (Tlaxcala,'Tlaxcala'),
+        (Veracruz,'Veracruz'),
+        (Yucatan,'Yucatan'),
+        (Zacatecas,'Zacatecas'),
+
+    )
+    nombre_destinatario = models.CharField(max_length=50,)
+    apellido_destinatario = models.CharField(max_length=50)
+    empresa_destino = models.CharField(max_length=100, blank=True, null=True)
+    sexo = models.PositiveSmallIntegerField(choices=SEXO, default=mujer)
+    telefono_destinatario = models.CharField(max_length=10, )
+    calle = models.CharField(max_length=50,)
+    numero_calle = models.CharField(max_length=15,)
+    referencia =  models.CharField(max_length=100, blank=True, null=True)
+    colonia =  models.CharField(max_length=50, )
+    codigo_postal =  models.CharField(max_length=8,)
+    ciudad =  models.CharField(max_length=50,)
+    estado =  models.PositiveSmallIntegerField(choices=ESTADO, default=Quintana_Roo)
+    pais =  models.CharField(max_length=50, blank=True, null=True)
+
+    razon_social = models.CharField(max_length=100, blank=True, null=True)
+    rfc = models.CharField(max_length=13, blank=True, null=True)
+    email_facturacion = models.CharField(max_length=50, blank=True, null=True)
+    created = models.DateTimeField(auto_now=True, editable=False)
+
+    #foreing key
+    profile = models.ForeignKey(User, related_name='enviofacturacion_userprofile')

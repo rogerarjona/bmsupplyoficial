@@ -147,9 +147,39 @@ def mostrar_producto(request, id):
 	return render(request, 'mostrar_producto.html', {'producto':producto, 'productwarehouse':productwarehouse, 'product_map':product_map
 		, 'prueba':prueba, 'form':form})
 
+import decimal
 def shopping_cart(request):
 
 	user = request.user
 	product_user = VentaTemporal.objects.filter(profile=user)
 
-	return render(request, 'shopping_cart.html', {'product_user':product_user})
+	total_sin_iva = 0
+	envio_sin_iva = 0
+
+	product_map = {}
+	for product in product_user:
+		id_producto = str(product.id)
+		product_map[id_producto] = {'producto': product, 'total_producto': product.cantidad_producto * product.producto.price}
+
+	for product in product_user:
+		total_sin_iva += (product.cantidad_producto * product.producto.price)
+		envio_sin_iva += (product.producto.product.send.cost)
+
+	precio_total_sin_iva = total_sin_iva + envio_sin_iva
+	total_iva = precio_total_sin_iva * decimal.Decimal(1.16)
+	total_iva = "{0:.2f}".format(total_iva)
+	precio_total = precio_total_sin_iva + decimal.Decimal(total_iva)
+	precio_total = "{0:.2f}".format(precio_total)
+
+	shopping_cart_form = CarritoForm():
+	shopping_cart_form.initial['']
+
+	return render(request, 'shopping_cart.html', {'product_user':product_user, 'product_map':product_map, 'total_sin_iva':total_sin_iva,
+		'envio_sin_iva':envio_sin_iva, 'precio_total_sin_iva':precio_total_sin_iva, 'total_iva':total_iva, 'precio_total':precio_total})
+
+def envio_facturacion(request):
+	user = request.user
+
+	if request.method == 'POST':
+	 	pass
+
