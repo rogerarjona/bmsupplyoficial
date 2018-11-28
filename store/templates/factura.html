@@ -48,33 +48,29 @@
                   <table class="table table-striped table-hover table-bordered">
                     <thead>
                       <tr>
-                        <th>Code</th>
-                        <th>Item</th>
+                        <th>SKU</th>
+                        <th>Producto</th>
                         <th>
-                          <div class="text-center">Qty</div>
+                          <div class="text-center">Cantidad</div>
                         </th>
                         <th>
-                          <div class="text-right">Price</div>
-                        </th>
-                        <th>
-                          <div class="text-right">Price total</div>
+                          <div class="text-right">Precio</div>
                         </th>
                       </tr>
                     </thead>
                     <tbody>
+                    {% for producto in factura.productos.all %}
                       <tr>
-                        <td>AO0</td>
-                        <td>Rerum ea nostrum sed</td>
+                        <td>{{producto.producto.product.sku}}</td>
+                        <td>{{producto.producto.product.shortname}}</td>
                         <td>
-                          <div class="text-center">1</div>
+                          <div class="text-center">{{producto.cantidad_producto}}</div>
                         </td>
                         <td>
-                          <div class="text-right">$268.00</div>
-                        </td>
-                        <td>
-                          <div class="text-right">$268.00</div>
+                          <div class="text-right">${{producto.producto.price}}</div>
                         </td>
                       </tr>
+                    {% endfor %}
                     </tbody>
                   </table>
                 </div>
@@ -85,14 +81,14 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="text-right text-contrast subtotal">
-                $4,286.00
+                <h1 class="text-danger">${{factura.total}}</h1>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-12">
               <div class="well comment">
-                Harum tempora dolorem aperiam quod maxime
+                Gracias por comprar en BMSupply
               </div>
             </div>
           </div>
