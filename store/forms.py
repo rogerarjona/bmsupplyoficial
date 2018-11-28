@@ -15,7 +15,7 @@ class CarritoForm(forms.Form):
 	precio_total = forms.CharField()
 	precio_total = forms.CharField()
 
-class EnvioFacturacion(forms.ModelForm):
+class EnvioFacturacionForm(forms.ModelForm):
 	class Meta:
 		model = EnvioFacturacion
 		exclude = ('profile', 'created') 

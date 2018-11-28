@@ -171,15 +171,24 @@ def shopping_cart(request):
 	precio_total = precio_total_sin_iva + decimal.Decimal(total_iva)
 	precio_total = "{0:.2f}".format(precio_total)
 
-	shopping_cart_form = CarritoForm():
+	shopping_cart_form = CarritoForm()
 	shopping_cart_form.initial['']
 
 	return render(request, 'shopping_cart.html', {'product_user':product_user, 'product_map':product_map, 'total_sin_iva':total_sin_iva,
 		'envio_sin_iva':envio_sin_iva, 'precio_total_sin_iva':precio_total_sin_iva, 'total_iva':total_iva, 'precio_total':precio_total})
 
-def envio_facturacion(request):
-	user = request.user
+# def envio_facturacion(request):
+# 	user = request.user
+	
+# 	shopping_cart_form = CarritoForm(request.POST)
 
-	if request.method == 'POST':
-	 	pass
+# 	if request.method == 'POST':
+# 	 	envio_facturacion = EnvioFacturacionForm(request.POST)
+# 	 	if envio_facturacion.is_valid():
+# 	 		envio_facturacion_form = envio_facturacion.save(commit=false)
+# 	 		envio_facturacion_form.profile
 
+# 	else:
+# 		envio_facturacion = EnvioFacturacionForm()
+
+# 	return render(request, '')
