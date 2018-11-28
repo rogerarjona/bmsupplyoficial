@@ -20,11 +20,16 @@
 	     		<div class="card-body">
 	     			<p class="card-text mb-0"><small class="text-muted">SKU: {{value.producto.sku}}</small></p>
 	     			<p class="card-text mb-0"><h6 class="text-muted">Desde: $<span class="text-success"><strong>{{value.producto.base}}</strong></span> MXN</h6></p>
-	     			<h5 class="card-title">{{value.producto.shortname}}</h5>
-	     			
+	     			<a href="{% url 'mostrar_producto' value.producto.id %}">
+	     				<h5 class="card-title">{{value.producto.shortname}}</h5>
+	     			</a>
 	     			{% if value.cantidad > 0 %}
 	     				<p>Disponibles: {{value.cantidad}}</p>
-	     				<a href="#" class="btn btn-warning">Agregar al carrito</a>
+	     				<form method="post" action="{% url 'shopping_cart_add' value.producto.id %}">
+	     					{% csrf_token %}
+	     					<input type="hidden" name="id_product" value="{{value.producto.id}}">
+	     					<button type="submit" class="btn btn-warning">Agregar al carrito</button>
+	     				</form>
 	     			{% else %}	
 	     				<h4 class="text-warning text-center">Agotado</h4>
 	     			{% endif %}

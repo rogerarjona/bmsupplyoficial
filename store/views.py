@@ -147,14 +147,31 @@ def mostrar_producto(request, id):
 	return render(request, 'mostrar_producto.html', {'producto':producto, 'productwarehouse':productwarehouse, 'product_map':product_map
 		, 'prueba':prueba, 'form':form})
 
+def shopping_cart_add(request, id_producto):
+	# id_product = request.GET.get('id_product')
+
+	try:
+		producto = ProductWarehouse.objects.get(product__id=id_producto)
+	except Exception as e:
+		producto = None
+
+	venta_tmp = VentaTemporal()
+	venta_tmp.cantidad_producto = 1
+	venta_tmp.profile = request.user
+	venta_tmp.producto = producto
+	venta_tmp.save()
+
+	return HttpResponseRedirect(reverse('shopping_cart'))
+
 import decimal
 def shopping_cart(request):
 
 	user = request.user
-	product_user = VentaTemporal.objects.filter(profile=user)
+	product_user = VentaTemporal.objects.filter(profile=user, terminada=False)
 
 	total_sin_iva = 0
 	envio_sin_iva = 0
+	cantidad_producto = 0
 
 	product_map = {}
 	for product in product_user:
@@ -164,6 +181,7 @@ def shopping_cart(request):
 	for product in product_user:
 		total_sin_iva += (product.cantidad_producto * product.producto.price)
 		envio_sin_iva += (product.producto.product.send.cost)
+		cantidad_producto += product.cantidad_producto
 
 	precio_total_sin_iva = total_sin_iva + envio_sin_iva
 	total_iva = precio_total_sin_iva * decimal.Decimal(1.16)
@@ -171,24 +189,85 @@ def shopping_cart(request):
 	precio_total = precio_total_sin_iva + decimal.Decimal(total_iva)
 	precio_total = "{0:.2f}".format(precio_total)
 
+
 	shopping_cart_form = CarritoForm()
-	shopping_cart_form.initial['']
+	shopping_cart_form.fields['precio_total_sin_iva'].initial = precio_total_sin_iva
+	shopping_cart_form.fields['total_iva'].initial = total_iva
+	shopping_cart_form.fields['precio_total'].initial = precio_total
+	shopping_cart_form.fields['total_sin_iva'].initial = total_sin_iva
+	shopping_cart_form.fields['envio_sin_iva'].initial = envio_sin_iva
+	shopping_cart_form.fields['cantidad_producto'].initial = cantidad_producto
 
 	return render(request, 'shopping_cart.html', {'product_user':product_user, 'product_map':product_map, 'total_sin_iva':total_sin_iva,
-		'envio_sin_iva':envio_sin_iva, 'precio_total_sin_iva':precio_total_sin_iva, 'total_iva':total_iva, 'precio_total':precio_total})
+		'envio_sin_iva':envio_sin_iva, 'precio_total_sin_iva':precio_total_sin_iva, 'total_iva':total_iva, 'precio_total':precio_total,
+		'shopping_cart_form':shopping_cart_form})
 
-# def envio_facturacion(request):
-# 	user = request.user
+def envio_facturacion(request):
+	user = request.user
+
+	precio_total_sin_iva = request.GET.get('precio_total_sin_iva')
+	total_iva = request.GET.get('total_iva')
+	precio_total = request.GET.get('precio_total')
+	total_sin_iva = request.GET.get('total_sin_iva')
+	envio_sin_iva = request.GET.get('envio_sin_iva')
+	cantidad_producto = request.GET.get('cantidad_producto')
+
+	if request.method == 'POST':
+		#shopping_cart_form = CarritoForm(request.POST)
+	 	envio_facturacion = EnvioFacturacionForm(request.POST)
+	 	if envio_facturacion.is_valid():
+	 		envio_facturacion_form = envio_facturacion.save(commit=False)
+	 		envio_facturacion_form.profile = user
+	 		envio_facturacion.save()
+
+	 		venta_usuario = Venta()
+	 		venta_usuario.total = precio_total
+	 		venta_usuario.cantidad_producto = cantidad_producto
+	 		venta_usuario.profile = request.user
+	 		venta_usuario.save()
+
+	 		venta_temporal = VentaTemporal.objects.select_related('producto').filter(profile=request.user, terminada=False)
+
+	 		for v in venta_temporal:
+	 			venta_usuario.productos.add(v)
+
+	 		url = '?precio_total_sin_iva={0}&total_iva={1}&precio_total={2}&total_sin_iva={3}&envio_sin_iva={4}&cantidad_producto={5}'.format(precio_total_sin_iva, total_iva, precio_total, total_sin_iva, envio_sin_iva, cantidad_producto)
+	 		return HttpResponseRedirect(reverse('envio_pago', args=[venta_usuario.id])+url)
+	else:
+		envio_facturacion = EnvioFacturacionForm()
+		#shopping_cart_form = CarritoForm()
+
+	return render(request, 'envio_facturacion.html', {'envio_facturacion':envio_facturacion, 'precio_total_sin_iva':precio_total_sin_iva,
+		'total_iva':total_iva, 'precio_total':precio_total, 'total_sin_iva':total_sin_iva, 'envio_sin_iva':envio_sin_iva})
+
+def envio_pago(request, id_venta):
+
+	user = request.user
 	
-# 	shopping_cart_form = CarritoForm(request.POST)
+	precio_total_sin_iva = request.GET.get('precio_total_sin_iva')
+	total_iva = request.GET.get('total_iva')
+	precio_total = request.GET.get('precio_total')
+	total_sin_iva = request.GET.get('total_sin_iva')
+	envio_sin_iva = request.GET.get('envio_sin_iva')
+	cantidad_producto = request.GET.get('cantidad_producto')
 
-# 	if request.method == 'POST':
-# 	 	envio_facturacion = EnvioFacturacionForm(request.POST)
-# 	 	if envio_facturacion.is_valid():
-# 	 		envio_facturacion_form = envio_facturacion.save(commit=false)
-# 	 		envio_facturacion_form.profile
+	if request.method=="POST":
+		venta = Venta.objects.get(id=id_venta)
+		venta.terminada = True
+		venta.save()
 
-# 	else:
-# 		envio_facturacion = EnvioFacturacionForm()
+		for v in venta.productos.all():
+			v.terminada = True
+			v.save()
 
-# 	return render(request, '')
+		return HttpResponseRedirect(reverse('factura_venta', args=[venta.id]))
+
+	return render(request, 'envio_pago.html', {'precio_total_sin_iva':precio_total_sin_iva, 'total_iva':total_iva, 'precio_total':precio_total
+	,'total_sin_iva':total_sin_iva, 'envio_sin_iva':envio_sin_iva, 'cantidad_producto':cantidad_producto   })
+
+def factura_venta(request, id_venta):
+
+	factura = Venta.objects.get(id=id_venta)
+	print factura
+
+	return render(request, 'factura.html', {'factura':factura})

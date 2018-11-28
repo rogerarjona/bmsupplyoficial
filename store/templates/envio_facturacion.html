@@ -1,0 +1,217 @@
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n widget_tweaks %}
+
+{% block metatags %}
+    <title>Envio y Facturacion - {{request.user}}</title>
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class=" col-md-3 float-left">
+			<button type="button" class="btn btn-info disabled">Carrito</button>
+		</div>
+		<div class="col-md-9">
+			<button type="button" class="btn btn-info disabled float-right">2. Envio y Pago </button>
+			<button type="button" class="btn btn-secondary float-right">1. Elegir Dirección </button>
+		</div>
+		<p class="p-2"></p>
+	</div>
+	<div class="row border border-primary rounded">	
+		<div class="col-md-6">
+			<form id="enviofacturacion-form" class="" class="form form-horizontal validate-form" method="post">
+				{% csrf_token %}
+				<p></p>
+				<h4> Direccion</h4>
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.nombre_destinatario.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.nombre_destinatario class="form-control input-sm" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.nombre_destinatario.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.apellido_destinatario.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.apellido_destinatario class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.apellido_destinatario.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.empresa_destino.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.empresa_destino class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.empresa_destino.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.sexo.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.sexo class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.sexo.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.telefono_destinatario.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.telefono_destinatario class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.telefono_destinatario.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.calle.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.calle class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.calle.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.numero_calle.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.numero_calle class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.numero_calle.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.referencia.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.referencia class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.referencia.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.colonia.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.colonia class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.colonia.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.codigo_postal.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.codigo_postal class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.codigo_postal.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.ciudad.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.ciudad class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.ciudad.errors }}
+		            </div>
+		        </div>
+
+		        <div class='form-group'>  
+		            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.estado.label }}</label>
+		            <div class='col-lg-8 col-md-8 controls'>
+		                {% render_field envio_facturacion.estado class="form-control" data-rule-required="true" %} 
+		                {{ envio_facturacion.non_field_errors }}
+		                {{ envio_facturacion.estado.errors }}
+		            </div>
+		        </div>
+		    
+		</div>
+		<div class="col-md-5">
+			<p></p>
+			<h4>Facturacion</h4>
+			<div class='form-group'>  
+	            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.razon_social.label }}</label>
+	            <div class='col-lg-8 col-md-8 controls'>
+	                {% render_field envio_facturacion.razon_social class="form-control" data-rule-required="true" %} 
+	                {{ envio_facturacion.non_field_errors }}
+	                {{ envio_facturacion.razon_social.errors }}
+	            </div>
+	        </div>
+
+	        <div class='form-group'>  
+	            <label class="col-md-4 control-label control-label-required ">{{ envio_facturacion.rfc.label }}</label>
+	            <div class='col-lg-8 col-md-8 controls'>
+	                {% render_field envio_facturacion.rfc class="form-control" data-rule-required="true" %} 
+	                {{ envio_facturacion.non_field_errors }}
+	                {{ envio_facturacion.rfc.errors }}
+	            </div>
+	        </div>
+
+	        <div class='form-group'>  
+	            <label class="col-md-6 control-label control-label-required ">{{ envio_facturacion.email_facturacion.label }}</label>
+	            <div class='col-lg-8 col-md-8 controls'>
+	                {% render_field envio_facturacion.email_facturacion class="form-control" data-rule-required="true" %} 
+	                {{ envio_facturacion.non_field_errors }}
+	                {{ envio_facturacion.email_facturacion.errors }}
+	            </div>
+	        </div>
+	        <div class="card border-light mb-5" style="max-width: 22rem;">
+				<div class="card-header">
+					<div class="row">
+				  		<div class="col-md-8">
+				  			SUBTOTAL(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{total_sin_iva}}
+				  		</div>
+				  	</div>
+				  	<div class="row">
+				  		<div class="col-md-8">
+				  			COSTO DE ENVIO(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{envio_sin_iva}}
+				  		</div>
+				  	</div>
+				</div>
+				<div class="card-header">
+				  	<div class="row">
+				  		<div class="col-md-8 font-weight-bold">
+				  			PRECIO TOTAL(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{precio_total_sin_iva}}
+				  		</div>
+				  	</div>
+				  	<div class="row">
+				  		<div class="col-md-8">
+				  			IVA (16%):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{total_iva}}
+				  		</div>
+				  	</div>
+				</div>
+				<div class="card-header">
+				  	<div class="row">
+				  		<div class="col-md-8 font-weight-bold">
+				  			PRECIO TOTAL(incl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{precio_total}}
+				  		</div>
+				  	</div>
+				</div>
+				<p></p>
+				<button type="submit" class="btn btn-warning">Siguiente</button>
+			</div>
+	        </form>
+
+
+		</div>
+	</div>
+{% endblock %}

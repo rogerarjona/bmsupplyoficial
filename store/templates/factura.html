@@ -1,0 +1,171 @@
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n widget_tweaks %}
+
+{% block metatags %}
+    <title>Envio y Facturacion - {{request.user}}</title>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-sm-12">
+	  <div class="page-header">
+	    <h1 class="pull-left">
+	      <i class="fa fa-money-bill-wave"></i>
+	      <span>Factura</span>
+	      <span class="text-muted">#{{factura.id}}</span>
+	      <div class="float-right">
+	      <div class="btn-group">
+	        <a class="btn btn-info" href="#"><i class="fa fa-print"></i>
+	        Print
+	        </a>
+	      </div>
+	    </div>
+	    </h1>
+	  </div>
+	</div>
+</div>
+<div class="row invoice">
+    <div class="col-sm-12">
+      <div class="box">
+        <div class="box-content box-double-padding">
+          <div class="row">
+            <div class="invoice-header">
+            	<p></p>
+              <div class="invoice-title">
+                <h3 class="text-muted">BMSupply Inc.</h3>
+              </div>
+            </div>
+          </div>
+          <div class="row border-top">
+            <div class="col-sm-4 info">
+              <div class="lead text-muted">Info</div>
+              Factura Generada el dia:
+              <strong>{{venta.created}}</strong>
+              <br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="responsive-table">
+                <div class="scrollable-area">
+                  <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>Item</th>
+                        <th>
+                          <div class="text-center">Qty</div>
+                        </th>
+                        <th>
+                          <div class="text-right">Price</div>
+                        </th>
+                        <th>
+                          <div class="text-right">Price total</div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>AO0</td>
+                        <td>Rerum ea nostrum sed</td>
+                        <td>
+                          <div class="text-center">1</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$268.00</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$268.00</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>AO8</td>
+                        <td>Labore iure voluptatem quisquam</td>
+                        <td>
+                          <div class="text-center">3</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$434.00</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$1,302.00</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>AO9</td>
+                        <td>Corrupti quisquam ut culpa</td>
+                        <td>
+                          <div class="text-center">3</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$480.00</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$1,440.00</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>AO3</td>
+                        <td>Laudantium culpa soluta harum</td>
+                        <td>
+                          <div class="text-center">2</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$283.00</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$566.00</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>AO8</td>
+                        <td>Aperiam facere quidem impedit</td>
+                        <td>
+                          <div class="text-center">2</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$133.00</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$266.00</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>AO7</td>
+                        <td>Officiis et quis id</td>
+                        <td>
+                          <div class="text-center">4</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$111.00</div>
+                        </td>
+                        <td>
+                          <div class="text-right">$444.00</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="hr-normal">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="text-right text-contrast subtotal">
+                $4,286.00
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="well comment">
+                Harum tempora dolorem aperiam quod maxime
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

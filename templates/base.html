@@ -27,12 +27,12 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-align-justify"></i> Categorias</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#"><i class="fa fa-desktop"></i> Desktop</a>
-            <a class="dropdown-item" href="#"><i class="fa fa-laptop"></i> Portatiles</a>
-            <a class="dropdown-item" href="#"><i class="fa fa-headphones"></i> Accesorios</a>
-            <a class="dropdown-item" href="#"><i class="fa fa-hdd"></i> Redes</a>
-            <a class="dropdown-item" href="#"><i class="fa fa-print"></i> Impresoras y tintas</a>
-            <a class="dropdown-item" href="#"><i class="fa fa-couch"></i> Muebles de Oficina</a>
+            <a class="dropdown-item" href="{% url 'desktop_list' %}"><i class="fa fa-desktop"></i> Desktop</a>
+            <a class="dropdown-item" href="{% url 'portatiles_list' %}"><i class="fa fa-laptop"></i> Portatiles</a>
+            <a class="dropdown-item" href="{% url 'accesorios_list' %}"><i class="fa fa-headphones"></i> Accesorios</a>
+            <a class="dropdown-item" href="{% url 'redes_list' %}"><i class="fa fa-hdd"></i> Redes</a>
+            <a class="dropdown-item" href="{% url 'impresoras_list' %}"><i class="fa fa-print"></i> Impresoras y tintas</a>
+            <a class="dropdown-item" href="{% url 'muebles_list' %}"><i class="fa fa-couch"></i> Muebles de Oficina</a>
           </div>
         </li>
         <li class="nav-item">
@@ -51,7 +51,7 @@
           <a class="nav-link" href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i> Carrito</a>
+          <a class="nav-link" href="{% url 'shopping_cart' %}"><i class="fa fa-shopping-cart"></i> Carrito</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-tie"></i> {{request.user.username}}</a>

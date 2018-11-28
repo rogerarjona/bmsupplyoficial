@@ -62,7 +62,7 @@ admin.site.register(QuantityDiscount, QuantityDiscountAdmin)
 
 class VentaTemporalAdmin(admin.ModelAdmin):
 	model = VentaTemporal
-	list_display = ('id', 'producto', 'cantidad_producto', 'profile')
+	list_display = ('id', 'producto', 'cantidad_producto', 'profile', 'terminada')
 	search_fields = ('producto', 'profile')
 	raw_id_fields = ['producto', 'profile',]
 admin.site.register(VentaTemporal, VentaTemporalAdmin)
@@ -73,3 +73,10 @@ class EnvioFacturacionAdmin(admin.ModelAdmin):
 	search_fields = ('profile',)
 	raw_id_fields = ['profile',]
 admin.site.register(EnvioFacturacion, EnvioFacturacionAdmin)
+
+class VentaAdmin(admin.ModelAdmin):
+	model = Venta
+	list_display = ('profile', 'total', 'terminada', 'created')
+	search_fields = ('profile',)
+	raw_id_fields = ['profile',]
+admin.site.register(Venta, VentaAdmin)

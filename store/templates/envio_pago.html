@@ -1,0 +1,104 @@
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n widget_tweaks %}
+
+{% block metatags %}
+    <title>Envio y Facturacion - {{request.user}}</title>
+{% endblock %}
+
+{% block content %}
+
+	<div class="row">
+		<div class=" col-md-3 float-left">
+			<button type="button" class="btn btn-info disabled">Carrito</button>
+		</div>
+		<div class="col-md-9">
+			<button type="button" class="btn btn-secondary float-right">2. Envio y Pago </button>
+			<button type="button" class="btn btn-info disabled float-right">1. Elegir Dirección </button>
+		</div>
+		<p class="p-2"></p>
+	</div>
+	<div class="row border border-primary rounded">
+		
+		<div class="col-md-6">
+			<div class="p-3">Forma de Envio</div>
+			<div>
+				<div class="card border-light mb-3" style="max-width: 40rem;">
+				  <div class="card-header">Envio Terrestre</div>
+				  <div class="card-body bg-light">
+				    <p class="card-text">> Envío asegurado y con rastreo en línea.</p>
+				    <p class="card-text">> El tiempo de entrega varía entre 1 y 4 días hábiles a partir de la confirmación de su pago dependiendo del destino.</p>
+				  </div>
+				</div>
+			</div>
+
+			<div class="p-3">Forma de Pago</div>
+			<div>
+				<div class="card border-light mb-3" style="max-width: 40rem;">
+				  <div class="card-header">Paypal</div>
+				  <div class="card-body bg-light">
+				  	<img src="{% static 'image/paypal-express-logos.png' %}">
+				    <p class="card-text">> Utiliza su cuenta PayPal para realizar pagos con tarjetas de débito/crédito VISA, MasterCard y American Express nacionales e internacionales.</p>
+				    <p class="card-text">> El cobro a la tarjeta se realiza después de confirmar su pedido en el último paso del proceso. Por mientras, no se realiza ningún cargo.</p>
+				  </div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-md-5">
+			<div class="p-3">Carrito</div>
+			<div class="card border-light mb-5" style="max-width: 22rem;">
+				<div class="card-header">
+					<div class="row">
+				  		<div class="col-md-8">
+				  			SUBTOTAL(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{total_sin_iva}}
+				  		</div>
+				  	</div>
+				  	<div class="row">
+				  		<div class="col-md-8">
+				  			COSTO DE ENVIO(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{envio_sin_iva}}
+				  		</div>
+				  	</div>
+				</div>
+				<div class="card-header">
+				  	<div class="row">
+				  		<div class="col-md-8 font-weight-bold">
+				  			PRECIO TOTAL(excl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{precio_total_sin_iva}}
+				  		</div>
+				  	</div>
+				  	<div class="row">
+				  		<div class="col-md-8">
+				  			IVA (16%):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{total_iva}}
+				  		</div>
+				  	</div>
+				</div>
+				<div class="card-header">
+				  	<div class="row">
+				  		<div class="col-md-8 font-weight-bold">
+				  			PRECIO TOTAL(incl. IVA):
+				  		</div>
+				  		<div class="col-md-4">
+				  			{{precio_total}}
+				  		</div>
+				  	</div>
+				</div>
+			<p class="p-2"></p>
+			<form method="post" action="#">
+				{% csrf_token %}
+				<button type="submit" name="venta_realizada" class="btn btn-lg btn-warning">Realizar Pago</button>
+			</form>
+			</div>
+		</div>
+	</div>
+	<p class="p-2"></p>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n %}
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n widget_tweaks %}
 
 {% block metatags %}
     <title>Shopping Cart - {{request.user}}</title>
@@ -10,7 +10,6 @@
 		<button type="button" class="btn btn-secondary">Carrito</button>
 	</div>
 	<div class="col-md-9">
-		<button type="button" class="btn btn-info disabled float-right">3. Confirmacion </button>
 		<button type="button" class="btn btn-info disabled float-right">2. Envio y Pago </button>
 		<button type="button" class="btn btn-info disabled float-right">1. Elegir Dirección </button>
 	</div>
@@ -76,6 +75,7 @@
 	<div class="col-md-7">
 		
 	</div>
+	{% if product_user %}
 	<div class="col-md-5">
 		<div class="row">
 			<div class="col-md-12">
@@ -127,14 +127,25 @@
 				  	</div>
 				  </div>
 				  <div class="card-body bg-light">
-				    <h4 class="card-title">Light card title</h4>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				    <h4 class="card-title">¡Ya Casi!</h4>
+				    <p class="card-text">Continue con los paso para finalizar su compra</p>
 				  </div>
+				  <form id="shoppin-cart-form" action="{% url 'envio_facturacion' %}">
+					{% render_field shopping_cart_form.precio_total_sin_iva type="hidden"%}
+					{% render_field shopping_cart_form.total_iva type="hidden"%}
+					{% render_field shopping_cart_form.precio_total type="hidden"%}
+					{% render_field shopping_cart_form.total_sin_iva type="hidden"%}
+					{% render_field shopping_cart_form.envio_sin_iva type="hidden"%}
+					{% render_field shopping_cart_form.cantidad_producto type="hidden"%}
+					<button type="submit" class="btn btn-warning float-right">Realizar Pedido</button>
+				</form>
 				</div>
 			</div>
 		</div>
 
+
 	</div>
+	{% endif %}
 </div>
 
 {% endblock %}

@@ -160,6 +160,8 @@ class VentaTemporal(models.Model):
 
     profile = models.ForeignKey(User, related_name='venta_temporal_userprofile')
     producto = models.ForeignKey(ProductWarehouse, related_name='temporal_productwarehouse')
+
+    terminada = models.BooleanField(default=False)
     
     class Meta:
         ordering = ('-created',)
@@ -169,7 +171,6 @@ class VentaTemporal(models.Model):
     def __unicode__(self):
         return u'{0}'.format(self.producto)
     
-
 class EnvioFacturacion(models.Model):
 
     mujer = 0
@@ -269,3 +270,13 @@ class EnvioFacturacion(models.Model):
 
     #foreing key
     profile = models.ForeignKey(User, related_name='enviofacturacion_userprofile')
+
+class Venta(models.Model):
+
+    profile = models.ForeignKey(User, related_name='venta_userprofile')
+    total = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Total", default=0)
+    cantidad_producto = models.SmallIntegerField(default=1)
+    productos = models.ManyToManyField(VentaTemporal)
+    terminada = models.BooleanField(default=False)
+
+    created =  models.DateTimeField(auto_now=True, editable=False)

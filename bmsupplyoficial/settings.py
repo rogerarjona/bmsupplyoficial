@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'store',
     'userprofile',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
