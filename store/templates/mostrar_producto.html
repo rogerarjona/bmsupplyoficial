@@ -1,13 +1,13 @@
-{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n %}
+{% extends "base.html" %}{% load static from staticfiles %}  {% load i18n widget_tweaks %}
 
 {% block metatags %}
-    <title>A ver</title>
-    <meta name="description" content="A ver"> 
+    <title>Mostrar Producto</title>
+    <meta name="description" content="Mostrar Producto"> 
 {% endblock %}
 
 {% block content %}
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-3 text-center">
 			<img src="{{producto.image.url}}" id="image-{{producto.id}}">
 			<p></p>
 			<a href="{{producto.pdf.url}}" target="_blank" class="btn btn-outline-secondary"><i class="fa fa-file-pdf"></i> Descargar PDF</a>
@@ -31,10 +31,11 @@
 					</div>
 					<div class="col-md-9">
 						<div class="float-right">
-							<form method="post" action="#">
-
-								<button type="submit" class="btn btn-warning">Agregar al carrito</button>
-							</form>
+							<form method="post" action="{% url 'shopping_cart_add' producto.id %}">
+	     					{% csrf_token %}
+	     					<input type="hidden" name="id_product" value="{{ producto.id}}">
+	     					<button type="submit" class="btn btn-warning">Agregar al carrito</button>
+	     				</form>
 							
 						</div>
 					</div>
@@ -90,6 +91,7 @@
 				{% endfor %}
 			</div>
 		</div>
+		<p class="p-2"></p>
 	</div>
 
 	<div class="row">

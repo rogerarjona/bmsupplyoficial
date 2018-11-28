@@ -151,7 +151,7 @@ def shopping_cart_add(request, id_producto):
 	# id_product = request.GET.get('id_product')
 
 	try:
-		producto = ProductWarehouse.objects.get(product__id=id_producto)
+		producto = ProductWarehouse.objects.filter(product__id=id_producto)[0]
 	except Exception as e:
 		producto = None
 
@@ -268,6 +268,5 @@ def envio_pago(request, id_venta):
 def factura_venta(request, id_venta):
 
 	factura = Venta.objects.get(id=id_venta)
-	print factura
-
+	print factura.created
 	return render(request, 'factura.html', {'factura':factura})

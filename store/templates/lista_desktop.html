@@ -15,7 +15,7 @@
 	{% for key, value in product_list.items %}
 	<div class="col-md-3">
 		<div class="container-float">
-	     	<div class="card border-success">
+	     	<div class="card border-success" id="caja">
 	     		<img  id="image-{{value.producto.id}}" class="card-img-top" src="{{ value.producto.image.url }}" alt="" width="300px" height="300px">
 	     		<div class="card-body">
 	     			<p class="card-text mb-0"><small class="text-muted">SKU: {{value.producto.sku}}</small></p>
@@ -45,3 +45,11 @@
 </div> -->
 {% endblock %}
 
+{% block extra_tags %}
+<style type="text/css">
+	#caja
+	{
+		height: 580px;
+	}	
+</style>
+{% endblock %}
